@@ -1,5 +1,6 @@
 package io.github.jcarvalho.musicstore
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategy
 import io.github.jcarvalho.musicstore.model.Album
 import io.github.jcarvalho.musicstore.model.Author
 import io.github.jcarvalho.musicstore.model.Song
@@ -9,9 +10,14 @@ import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.context.annotation.Bean
+import org.springframework.http.converter.json.Jackson2ObjectMapperBuilder
 
 @SpringBootApplication
 class MusicStoreApplication {
+
+    @Bean fun jacksonBuilder() = Jackson2ObjectMapperBuilder().apply {
+        propertyNamingStrategy(PropertyNamingStrategy.SNAKE_CASE)
+    }
 
     @Bean
     fun dbSeed(albumRepository: AlbumRepository,
